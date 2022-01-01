@@ -32,4 +32,10 @@ export default theme => ({
         padding: theme.spacing(2),
         width: 500
     },
+    category: {
+        // position: "absolute",
+        marginLeft: 5,
+        marginTop: 5,
+        width: 125
+    }
 });

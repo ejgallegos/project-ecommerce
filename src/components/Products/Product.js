@@ -9,27 +9,41 @@ import Chip from '@material-ui/core/Chip';
 import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import StarIcon from '@material-ui/icons/Star';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import styles from './styles';
+
+import { saveLastInterestProduct } from "../../app/services/storageServices";
+import db from "../../app/db/db";
 
 const useStyles = makeStyles(styles);
 
 const Product = ({ item }) => {
     const classes = useStyles();
     const { image, price, description, title, category } = item;
-    const { rate, count } = item.rating;
+    const { rate } = item.rating;
 
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
+
+        saveLastInterestProduct(title);
     };
 
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleAddShoppingCart = ({ title, price, category }) => {
+        db.cart.add({
+            title: title,
+            price: price,
+            category: category
+        })
+    }
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
@@ -38,6 +52,7 @@ const Product = ({ item }) => {
         <>
             <CssBaseline />
             <Card className={classes.card}>
+                <Chip size="small" label={category} className={classes.category} color="primary" />
                 <CardMedia
                     className={classes.cardMedia}
                     image={image}
@@ -52,7 +67,6 @@ const Product = ({ item }) => {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Chip size="small" label={category} color="primary" />
                     <IconButton aria-label="cart">
                         <Badge color="secondary" badgeContent={rate} >
                             <StarIcon />
@@ -60,6 +74,9 @@ const Product = ({ item }) => {
                     </IconButton>
                     <IconButton aria-describedby={id} variant="contained" onClick={handleClick}>
                         <SearchIcon />
+                    </IconButton>
+                    <IconButton style={{ marginLeft: 100 }} onClick={() => handleAddShoppingCart(item)}>
+                        <AddShoppingCartIcon />
                     </IconButton>
                     <Popover
                         id={id}
