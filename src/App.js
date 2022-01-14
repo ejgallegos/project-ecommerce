@@ -1,24 +1,22 @@
 import React from 'react';
-import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
-
 import NavBar from './components/Header/NavBar';
-import GridProducts from './components/Products/GridProducts';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import Home from './views/Home';
 import Footer from './components/Footer/Footer';
+import ProductView from './views/Products/ProductView';
+import PurchaseView from './views/Products/PurchaseView';
 
-import AlertProduct from './components/Products/AlertProduct';
 
-
-function App() {
+const App = () => {
   return (
     <>
       <NavBar />
-      <Container>
-        <Box my={10}>
-          <AlertProduct />
-          <GridProducts />
-        </Box>
-      </Container>
+      <Switch>
+        <Route path={"/"} exact component={Home} />
+        <Route path={"/product/:id"} exact component={ProductView} />
+        <Route path={"/purchase"} exact component={PurchaseView} />
+        <Route render={() => <Redirect to={"/"} />} />
+      </Switch>
       <Footer />
     </>
   );

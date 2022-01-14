@@ -14,6 +14,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Zoom from '@material-ui/core/Zoom';
 
 import styles from './styles';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(styles);
 
@@ -38,11 +39,13 @@ function ScrollTop(props) {
     };
 
     return (
-        <Zoom in={trigger}>
-            <div onClick={handleClick} role="presentation" className={classes.root}>
-                {children}
-            </div>
-        </Zoom>
+        <>
+            <Zoom in={trigger}>
+                <div onClick={handleClick} role="presentation" className={classes.root}>
+                    {children}
+                </div>
+            </Zoom>
+        </>
     );
 }
 
@@ -66,9 +69,11 @@ const NavBar = (props) => {
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" className={classes.title}>
-                        Project E-Commerce
-                    </Typography>
+                    <Link to={"/"} className={classes.title}>
+                        <Typography variant="h6" >
+                            Project E-Commerce
+                        </Typography>
+                    </Link>
                     <ShoppingCart />
                 </Toolbar>
             </AppBar>

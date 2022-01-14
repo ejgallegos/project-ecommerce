@@ -4,11 +4,14 @@ export default theme => ({
         position: 'fixed',
         bottom: theme.spacing(2),
         right: theme.spacing(2),
+        zindex: 999
     },
     menuButton: {
         marginRight: theme.spacing(2),
     },
     title: {
         flexGrow: 1,
+        textDecoration: "none",
+        color: "#fff"
     },
 });

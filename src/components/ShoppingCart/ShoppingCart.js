@@ -8,6 +8,7 @@ import Divider from '@material-ui/core/Divider';
 
 import db from "../../app/db/db";
 import { useLiveQuery } from "dexie-react-hooks";
+import { Link } from 'react-router-dom';
 
 const ShoppingCart = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -56,10 +57,14 @@ const ShoppingCart = () => {
             onClose={handleMenuClose}
         >
             {productsCart?.map((product) => {
-                return <MenuItem key={product.id} onClick={handleMenuClose}>{product.title}</MenuItem>
+                return <MenuItem key={product.id} onClick={handleMenuClose}>
+                    <Link to={`/product/${product.id}`}>
+                        {product.title}
+                    </Link>
+                </MenuItem>
             })}
             <Divider />
-            <MenuItem>Total: ${totalPrice}</MenuItem>
+            <MenuItem><Link to={"/purchase"}>Total: ${totalPrice}</Link></MenuItem>
         </Menu>
     );
 
